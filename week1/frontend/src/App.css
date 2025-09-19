@@ -1,3 +1,23 @@
+/* Add Expense Button */
+.expense-add-btn {
+  background: linear-gradient(90deg, #fda085 0%, #f6d365 100%);
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  padding: 0.8rem 2.2rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px 0 #fda08533;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  margin-bottom: 1.5rem;
+}
+
+.expense-add-btn:hover {
+  background: linear-gradient(90deg, #f6d365 0%, #fda085 100%);
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 24px 0 #fda08533;
+}
 /* Modern, beautiful expense tracker styles */
 
 body {
