@@ -1,38 +1,38 @@
 import React, { useState, useRef, useEffect } from "react";
 import ExpenseItem from "../components/ExpenseItem";
 import ExpenseAdd from "../components/ExpenseAdd";
+import { expenseService } from "../services/expenseService";
 import type { Expense } from "../types/Expense";
 
-const initialExpenses: Expense[] = [
-  {
-    id: "e1",
-    date: "2023-10-01",
-    description: "Groceries",
-    payer: "Alice",
-    amount: 150.75,
-  },
-  {
-    id: "e2",
-    date: "2023-10-03",
-    description: "Utilities",
-    payer: "Bob",
-    amount: 80.5,
-  },
-  {
-    id: "e3",
-    date: "2023-10-05",
-    description: "Dinner",
-    payer: "Charlie",
-    amount: 75.0,
-  },
-];
-
 const HomePage: React.FC = () => {
-  const [expenses, setExpenses] = useState<Expense[]>(initialExpenses);
+  const [expenses, setExpenses] = useState<Expense[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
   const listEndRef = useRef<HTMLDivElement | null>(null);
 
-  const handleAdd = (newExpense: Expense) => {
-    setExpenses((prev) => [...prev, newExpense]);
+  useEffect(() => {
+    const fetchExpenses = async     () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const data = await expenseService.getAllExpenses();
+        setExpenses(data);
+      } catch (err) {
+        setError((err as Error).message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchExpenses();
+  }, []);
+
+  const handleAdd = async (newExpense: Expense) => {
+    try {
+      const addedExpense = await expenseService.addExpense(newExpense);
+      setExpenses((prev) => [...prev, addedExpense]);
+    } catch (err) {
+      setError((err as Error).message);
+    }
   };
 
   useEffect(() => {
@@ -41,13 +41,51 @@ const HomePage: React.FC = () => {
     }
   }, [expenses]);
 
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <div className="loading-spinner"></div>
+        <p>Loading expenses...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="error-container">
+        <div className="error-message">
+          <h3>Oops! Something went wrong</h3>
+          <p>{error}</p>
+          <button
+            className="retry-button"
+            onClick={() => window.location.reload()}
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
+      <div className="page-header">
+        <h1>💰 Expense Tracker</h1>
+        <p>Keep track of your shared expenses</p>
+      </div>
       <ExpenseAdd handleAdd={handleAdd} />
       <div className="expense-list">
-        {expenses.map((expense) => (
-          <ExpenseItem key={expense.id} expense={expense} />
-        ))}
+        {expenses.length === 0 ? (
+          <div className="empty-state">
+            <div className="empty-icon">📝</div>
+            <h3>No expenses yet</h3>
+            <p>Add your first expense using the button above!</p>
+          </div>
+        ) : (
+          expenses.map((expense) => (
+            <ExpenseItem key={expense.id} expense={expense} />
+          ))
+        )}
         <div ref={listEndRef} />
       </div>
     </>

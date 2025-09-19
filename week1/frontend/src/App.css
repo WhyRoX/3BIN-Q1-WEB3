@@ -1,29 +1,170 @@
 /* Add Expense Button */
 .expense-add-btn {
-  background: linear-gradient(90deg, #fda085 0%, #f6d365 100%);
+  background: linear-gradient(90deg, #4facfe 0%, #00f2fe 50%, #43e97b 100%);
   color: #fff;
   border: none;
   border-radius: 30px;
   padding: 0.8rem 2.2rem;
   font-size: 1.15rem;
   font-weight: 700;
-  box-shadow: 0 2px 8px 0 #fda08533;
+  box-shadow: 0 2px 8px 0 #4facfe33;
   cursor: pointer;
   transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
   margin-bottom: 1.5rem;
 }
 
-.expense-add-btn:hover {
-  background: linear-gradient(90deg, #f6d365 0%, #fda085 100%);
+.expense-add-btn:hover:not(:disabled) {
+  background: linear-gradient(90deg, #43e97b 0%, #38f9d7 50%, #4facfe 100%);
   transform: translateY(-2px) scale(1.03);
-  box-shadow: 0 6px 24px 0 #fda08533;
+  box-shadow: 0 6px 24px 0 #43e97b33;
+}
+
+.expense-add-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
 }
 /* Modern, beautiful expense tracker styles */
 
 body {
-  background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+  background: linear-gradient(
+    120deg,
+    #4facfe 0%,
+    #00f2fe 33%,
+    #43e97b 66%,
+    #38f9d7 100%
+  );
   min-height: 100vh;
   font-family: "Inter", "Segoe UI", Arial, sans-serif;
+}
+
+/* Page Header */
+.page-header {
+  text-align: center;
+  margin: 2rem auto 3rem;
+  max-width: 600px;
+}
+
+.page-header h1 {
+  font-size: 2.5rem;
+  color: #f76b1c;
+  margin: 0 0 0.5rem 0;
+  font-weight: 800;
+  text-shadow: 0 2px 4px rgba(247, 107, 28, 0.1);
+}
+
+.page-header p {
+  color: #666;
+  font-size: 1.1rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Loading States */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #4facfe;
+  border-top: 4px solid #43e97b;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-container p {
+  color: #666;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+/* Error States */
+.error-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+}
+
+.error-message {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 18px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 6px 32px 0 rgba(253, 160, 133, 0.12);
+  border: 1.5px solid #ff6b6b33;
+  max-width: 400px;
+}
+
+.error-message h3 {
+  color: #ff6b6b;
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
+}
+
+.error-message p {
+  color: #666;
+  margin: 0 0 1.5rem 0;
+}
+
+.retry-button {
+  background: linear-gradient(90deg, #ff6b6b 0%, #ffa085 100%);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 0.7rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.retry-button:hover {
+  transform: translateY(-2px) scale(1.05);
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 18px;
+  box-shadow: 0 6px 32px 0 rgba(253, 160, 133, 0.12);
+  margin: 2rem auto;
+  max-width: 400px;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.empty-state h3 {
+  color: #f76b1c;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+}
+
+.empty-state p {
+  color: #666;
+  margin: 0;
+  font-size: 1rem;
 }
 
 .expense-list {
@@ -44,7 +185,7 @@ body {
   padding: 1.5rem 2.2rem;
   margin-bottom: 1.5rem;
   transition: box-shadow 0.2s, transform 0.2s;
-  border: 1.5px solid #fda08533;
+  border: 1.5px solid #4facfe33;
   position: relative;
   overflow: hidden;
 }
@@ -56,7 +197,7 @@ body {
   top: 0;
   width: 6px;
   height: 100%;
-  background: linear-gradient(180deg, #f6d365 0%, #fda085 100%);
+  background: linear-gradient(180deg, #4facfe 0%, #43e97b 50%, #38f9d7 100%);
   border-radius: 18px 0 0 18px;
 }
 
@@ -93,14 +234,14 @@ body {
 }
 
 .expense-item__amount {
-  background: linear-gradient(90deg, #fda085 0%, #f6d365 100%);
+  background: linear-gradient(90deg, #38f9d7 0%, #00f2fe 50%, #4facfe 100%);
   color: #fff;
   padding: 0.7rem 1.7rem;
   border-radius: 30px;
   font-weight: 800;
   font-size: 1.18rem;
   margin-left: 2.2rem;
-  box-shadow: 0 2px 8px 0 #fda08533;
+  box-shadow: 0 2px 8px 0 #38f9d733;
   letter-spacing: 0.01em;
   border: none;
 }
