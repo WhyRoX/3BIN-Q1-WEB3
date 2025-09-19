@@ -34,4 +34,22 @@ export const expenseService = {
       throw error;
     }
   },
+
+  async resetExpenses(): Promise<{ message: string; expenses: Expense[] }> {
+    try {
+      const response = await fetch(`${API_BASE_URL}/expenses/reset`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error("Error resetting expenses:", error);
+      throw error;
+    }
+  },
 };

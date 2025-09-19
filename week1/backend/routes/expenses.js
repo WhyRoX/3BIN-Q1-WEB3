@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const { getAllExpenses, addExpense } = require("../services/expenses");
+const {
+  getAllExpenses,
+  addExpense,
+  resetExpenses,
+} = require("../services/expenses");
 
 // GET /expenses - Return all expenses
 router.get("/expenses", (req, res) => {
@@ -27,6 +31,20 @@ router.post("/expenses", (req, res) => {
     res.status(201).json(addedExpense);
   } catch (error) {
     res.status(500).json({ error: "Failed to add expense" });
+  }
+});
+
+// POST /expenses/reset - Reset expenses to initial state
+router.post("/expenses/reset", (req, res) => {
+  try {
+    const resetData = resetExpenses();
+    res.json({
+      message: "Expenses reset to initial state successfully",
+      expenses: resetData,
+    });
+  } catch (error) {
+    console.error("Reset expenses error:", error);
+    res.status(500).json({ error: "Failed to reset expenses" });
   }
 });
 

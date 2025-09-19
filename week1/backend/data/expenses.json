@@ -19,33 +19,5 @@
     "description": "Example expense #3 from Alice",
     "payer": "Alice",
     "amount": 2
-  },
-  {
-    "id": "1758266433196",
-    "date": "2025-09-19",
-    "description": "Movie tickets",
-    "payer": "Alice",
-    "amount": 66.92
-  },
-  {
-    "id": "1758266455530",
-    "date": "2025-09-19",
-    "description": "Dinner",
-    "payer": "Bob",
-    "amount": 8.03
-  },
-  {
-    "id": "1758266457253",
-    "date": "2025-09-19",
-    "description": "Gas",
-    "payer": "Bob",
-    "amount": 22.16
-  },
-  {
-    "id": "1758266732704",
-    "date": "2025-09-19",
-    "description": "Utilities",
-    "payer": "Alice",
-    "amount": 84.84
   }
 ]

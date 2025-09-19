@@ -5,7 +5,7 @@ interface ExpenseAddProps {
   handleAdd: (expense: Expense) => Promise<void>;
 }
 
-const payers = ["Alice", "Bob"];
+const payers = ["Alice", "Bob", "Charlie", "Diana", "Eve", "Mahmoud"];
 const descriptions = [
   "Groceries",
   "Coffee",
@@ -47,11 +47,9 @@ const ExpenseAdd: React.FC<ExpenseAddProps> = ({ handleAdd }) => {
   };
 
   return (
-    <div style={{ textAlign: "center", marginBottom: "2rem" }}>
-      <button className="expense-add-btn" onClick={onAdd} disabled={isAdding}>
-        {isAdding ? "Adding..." : "✨ Add Random Expense"}
-      </button>
-    </div>
+    <button className="expense-add-btn" onClick={onAdd} disabled={isAdding}>
+      {isAdding ? "Adding..." : "✨ Add Random Expense"}
+    </button>
   );
 };
 

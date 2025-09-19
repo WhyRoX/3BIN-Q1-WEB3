@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 const dataPath = path.join(__dirname, "../data/expenses.json");
+const initDataPath = path.join(__dirname, "../data/expense.init.json");
 
 function getAllExpenses() {
   try {
@@ -25,7 +26,20 @@ function addExpense(expense) {
   }
 }
 
+function resetExpenses() {
+  try {
+    const initData = fs.readFileSync(initDataPath, "utf8");
+    const initialExpenses = JSON.parse(initData);
+    fs.writeFileSync(dataPath, JSON.stringify(initialExpenses, null, 2));
+    return initialExpenses;
+  } catch (error) {
+    console.error("Error resetting expenses:", error);
+    throw error;
+  }
+}
+
 module.exports = {
   getAllExpenses,
   addExpense,
+  resetExpenses,
 };

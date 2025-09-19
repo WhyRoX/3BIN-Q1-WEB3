@@ -8,10 +8,11 @@ const HomePage: React.FC = () => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [isResetting, setIsResetting] = useState<boolean>(false);
   const listEndRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const fetchExpenses = async     () => {
+    const fetchExpenses = async () => {
       try {
         setLoading(true);
         setError(null);
@@ -32,6 +33,21 @@ const HomePage: React.FC = () => {
       setExpenses((prev) => [...prev, addedExpense]);
     } catch (err) {
       setError((err as Error).message);
+    }
+  };
+
+  const handleReset = async () => {
+    if (isResetting) return;
+
+    setIsResetting(true);
+    try {
+      setError(null);
+      const response = await expenseService.resetExpenses();
+      setExpenses(response.expenses);
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setIsResetting(false);
     }
   };
 
@@ -73,7 +89,16 @@ const HomePage: React.FC = () => {
         <h1>💰 Expense Tracker</h1>
         <p>Keep track of your shared expenses</p>
       </div>
-      <ExpenseAdd handleAdd={handleAdd} />
+      <div className="actions-container">
+        <ExpenseAdd handleAdd={handleAdd} />
+        <button
+          className="reset-button"
+          onClick={handleReset}
+          disabled={isResetting || expenses.length === 0}
+        >
+          {isResetting ? "Resetting..." : "🔄 Reset Data"}
+        </button>
+      </div>
       <div className="expense-list">
         {expenses.length === 0 ? (
           <div className="empty-state">
