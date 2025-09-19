@@ -1,4 +1,11 @@
-// filepath: /Users/whyrox/Developer/3BIN-Q1-WEB3/week1/frontend/src/utils/colorUtils.ts
+import type { Expense } from "../types/Expense";
+
+export type SortOption =
+  | "date-newest"
+  | "date-oldest"
+  | "amount-highest"
+  | "amount-lowest";
+
 /**
  * Generates a consistent color index for a given payer name
  * Using a simple hash function to ensure the same payer always gets the same color
@@ -28,4 +35,35 @@ export function getPayerColorClass(payerName: string): string {
 export function getBorderColorClass(payerName: string): string {
   const colorIndex = getPayerColorIndex(payerName);
   return `border-color-${colorIndex}`;
+}
+
+/**
+ * Sorts expenses based on the given sort option
+ */
+export function sortExpenses(
+  expenses: Expense[],
+  sortOption: SortOption
+): Expense[] {
+  const sorted = [...expenses];
+
+  switch (sortOption) {
+    case "date-newest":
+      return sorted.sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+      );
+
+    case "date-oldest":
+      return sorted.sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+      );
+
+    case "amount-highest":
+      return sorted.sort((a, b) => b.amount - a.amount);
+
+    case "amount-lowest":
+      return sorted.sort((a, b) => a.amount - b.amount);
+
+    default:
+      return sorted;
+  }
 }

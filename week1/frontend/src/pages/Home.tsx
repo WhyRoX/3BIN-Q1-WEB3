@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import ExpenseItem from "../components/ExpenseItem";
 import ExpenseAdd from "../components/ExpenseAdd";
+import ExpenseSorter, { type SortOption } from "../components/ExpenseSorter";
 import { expenseService } from "../services/expenseService";
+import { sortExpenses } from "../utils/colorUtils";
 import type { Expense } from "../types/Expense";
 
 const HomePage: React.FC = () => {
@@ -9,6 +11,7 @@ const HomePage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [isResetting, setIsResetting] = useState<boolean>(false);
+  const [sortOption, setSortOption] = useState<SortOption>("date-newest");
   const listEndRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -51,11 +54,18 @@ const HomePage: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    if (listEndRef.current) {
-      listEndRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [expenses]);
+  const handleSortChange = (newSortOption: SortOption) => {
+    setSortOption(newSortOption);
+  };
+
+  // Sort expenses based on current sort option
+  const sortedExpenses = sortExpenses(expenses, sortOption);
+
+  //   useEffect(() => {
+  //     if (listEndRef.current) {
+  //       listEndRef.current.scrollIntoView({ behavior: "smooth" });
+  //     }
+  //   }, [expenses]);
 
   if (loading) {
     return (
@@ -99,6 +109,12 @@ const HomePage: React.FC = () => {
           {isResetting ? "Resetting..." : "🔄 Reset Data"}
         </button>
       </div>
+      {expenses.length > 0 && (
+        <ExpenseSorter
+          sortOption={sortOption}
+          onSortChange={handleSortChange}
+        />
+      )}
       <div className="expense-list">
         {expenses.length === 0 ? (
           <div className="empty-state">
@@ -107,7 +123,7 @@ const HomePage: React.FC = () => {
             <p>Add your first expense using the button above!</p>
           </div>
         ) : (
-          expenses.map((expense) => (
+          sortedExpenses.map((expense) => (
             <ExpenseItem key={expense.id} expense={expense} />
           ))
         )}
