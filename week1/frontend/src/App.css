@@ -1,3 +1,108 @@
+/* Modern, beautiful expense tracker styles */
+
+body {
+  background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+  min-height: 100vh;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+}
+
+.expense-list {
+  max-width: 600px;
+  margin: 3rem auto;
+  padding: 0;
+  list-style: none;
+}
+
+.expense-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 18px;
+  box-shadow: 0 6px 32px 0 rgba(253, 160, 133, 0.12),
+    0 1.5px 6px 0 rgba(0, 0, 0, 0.04);
+  padding: 1.5rem 2.2rem;
+  margin-bottom: 1.5rem;
+  transition: box-shadow 0.2s, transform 0.2s;
+  border: 1.5px solid #fda08533;
+  position: relative;
+  overflow: hidden;
+}
+
+.expense-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 6px;
+  height: 100%;
+  background: linear-gradient(180deg, #f6d365 0%, #fda085 100%);
+  border-radius: 18px 0 0 18px;
+}
+
+.expense-item:hover {
+  box-shadow: 0 12px 40px 0 rgba(253, 160, 133, 0.18),
+    0 3px 12px 0 rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px) scale(1.01);
+}
+
+.expense-item__description {
+  flex: 1;
+  margin-left: 1.2rem;
+}
+
+.expense-item__description h2 {
+  margin: 0 0 0.3rem 0;
+  font-size: 1.35rem;
+  color: #f76b1c;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.expense-item__date {
+  color: #888;
+  font-size: 1.02rem;
+  margin-bottom: 0.15rem;
+  font-weight: 500;
+}
+
+.expense-item__payer {
+  color: #4a90e2;
+  font-size: 1.01rem;
+  font-weight: 500;
+}
+
+.expense-item__amount {
+  background: linear-gradient(90deg, #fda085 0%, #f6d365 100%);
+  color: #fff;
+  padding: 0.7rem 1.7rem;
+  border-radius: 30px;
+  font-weight: 800;
+  font-size: 1.18rem;
+  margin-left: 2.2rem;
+  box-shadow: 0 2px 8px 0 #fda08533;
+  letter-spacing: 0.01em;
+  border: none;
+}
+
+@media (max-width: 700px) {
+  .expense-list {
+    max-width: 98vw;
+    margin: 1.5rem auto;
+  }
+  .expense-item {
+    padding: 1rem 0.7rem;
+    margin-bottom: 1rem;
+  }
+  .expense-item__amount {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    margin-left: 1rem;
+  }
+  .expense-item__description {
+    margin-left: 0.5rem;
+  }
+}
 #root {
   max-width: 1280px;
   margin: 0 auto;
