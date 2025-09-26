@@ -5,6 +5,7 @@ import ExpenseSorter, { type SortOption } from "../components/ExpenseSorter";
 import { expenseService } from "../services/expenseService";
 import { sortExpenses } from "../utils/colorUtils";
 import type { Expense } from "../types/Expense";
+import ExpenseAddForm from "../components/ExpenseAddForm";
 
 const HomePage: React.FC = () => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
@@ -95,12 +96,40 @@ const HomePage: React.FC = () => {
 
   return (
     <>
+      {/* Sticky Navbar */}
+      <nav className="navbar">
+        <div className="navbar-container">
+          <a href="#" className="navbar-brand">
+            <span className="navbar-logo">💰</span>
+            <h1 className="navbar-title">ExpenseTracker</h1>
+          </a>
+          
+          <ul className="navbar-nav">
+            <li><a href="#dashboard" className="navbar-link active">Dashboard</a></li>
+            <li><a href="#expenses" className="navbar-link">Expenses</a></li>
+            <li><a href="#analytics" className="navbar-link">Analytics</a></li>
+          </ul>
+          
+          <div className="navbar-stats">
+            <div className="navbar-stat">
+              Total: <span className="navbar-stat-value">{expenses.length}</span>
+            </div>
+            <div className="navbar-stat">
+              Amount: <span className="navbar-stat-value">
+                ${expenses.reduce((sum, expense) => sum + expense.amount, 0).toFixed(2)}
+              </span>
+            </div>
+          </div>
+        </div>
+      </nav>
+
       <div className="page-header">
         <h1>💰 Expense Tracker</h1>
         <p>Keep track of your shared expenses</p>
       </div>
       <div className="actions-container">
         <ExpenseAdd handleAdd={handleAdd} />
+        <ExpenseAddForm handleAdd={handleAdd} />
         <button
           className="reset-button"
           onClick={handleReset}

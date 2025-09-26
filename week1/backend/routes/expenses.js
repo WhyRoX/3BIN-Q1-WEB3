@@ -16,7 +16,6 @@ router.get("/expenses", (req, res) => {
   }
 });
 
-// POST /expenses - Add a new expense
 router.post("/expenses", (req, res) => {
   try {
     const { id, date, description, payer, amount } = req.body;

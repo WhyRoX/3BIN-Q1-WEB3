@@ -19,5 +19,33 @@
     "description": "Example expense #3 from Alice",
     "payer": "Alice",
     "amount": 2
+  },
+  {
+    "id": "1758273735974",
+    "date": "2025-09-13",
+    "description": "BOULETTES",
+    "payer": "ENES",
+    "amount": 69.69
+  },
+  {
+    "id": "1758274298947",
+    "date": "2025-09-19",
+    "description": "Dinner",
+    "payer": "Alice",
+    "amount": 7.15
+  },
+  {
+    "id": "1758274299679",
+    "date": "2025-09-19",
+    "description": "Lunch",
+    "payer": "Charlie",
+    "amount": 67.76
+  },
+  {
+    "id": "1758274300367",
+    "date": "2025-09-19",
+    "description": "Dinner",
+    "payer": "Mahmoud",
+    "amount": 44.72
   }
 ]
